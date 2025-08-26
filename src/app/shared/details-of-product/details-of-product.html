@@ -1,0 +1,37 @@
+<div *ngIf="product as p; else notfound" class="pdp">
+  <nav class="crumbs">
+    <a routerLink="/shop">Shop</a> / <span>{{ p.name }}</span>
+  </nav>
+
+  <div class="wrap">
+    <div class="media">
+      <img [src]="p.img" [alt]="p.name" />
+    </div>
+
+    <div class="meta">
+      <h1 class="name">{{ p.name }}</h1>
+      <p class="cat">{{ p.cat }}</p>
+      <div class="price">₹{{ p.price }}</div>
+
+      <p class="desc">
+        {{ p.desc || 'Product description coming soon.' }}
+      </p>
+
+      <ul class="uses" *ngIf="p.uses?.length">
+        <li *ngFor="let u of p.uses">{{ u }}</li>
+      </ul>
+
+      <div class="actions">
+        <button class="btn" (click)="addToCart()">Add to Cart</button>
+        <button class="btn buy" (click)="buyNow()">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notfound>
+  <section class="pdp notfound">
+    <p>Product not found.</p>
+    <a class="btn" routerLink="/shop">Back to Shop</a>
+  </section>
+</ng-template>

@@ -1,0 +1,21 @@
+<div class="body">
+<div class="login-box">
+  <div class="logo">
+    <img src="/images/logo.png" alt="PharmaPlus Logo">
+    <h1>PharmaPlus</h1>
+  </div>
+
+<form class="form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <h2>Login</h2>
+  <input type="text" name="username" ngModel placeholder="Username" required>
+  <input type="password" name="password" ngModel placeholder="Password" required>
+  <button type="submit" [disabled]="f.invalid">Login</button>
+</form>
+
+<p class="note">
+  Don’t have an account?
+  <a routerLink="/signup" routerLinkActive="active">Signup</a>
+</p>
+
+</div>
+</div>

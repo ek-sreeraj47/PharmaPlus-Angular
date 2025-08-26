@@ -1,0 +1,55 @@
+<section class="shop">
+  <!-- top bar -->
+  <div class="top">
+    <h1 class="title">Shop</h1>
+
+    <div class="bar">
+      <input
+        class="search"
+        type="text"
+        placeholder="Search products…"
+
+      />
+
+      <select class="pick" [ngModel]="cat()" (ngModelChange)="setCat($event)">
+        <option *ngFor="let c of cats()" [value]="c">{{ c }}</option>
+      </select>
+
+      <select class="pick2" [ngModel]="sort()" (ngModelChange)="setSort($event)">
+        <option value="reco">Recommended</option>
+        <option value="price_low">Price: Low to High</option>
+        <option value="price_high">Price: High to Low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- grid -->
+  <div class="grid">
+    <article class="card" *ngFor="let p of pageItems()">
+      <a class="imgbox" [routerLink]="['/product', p.id]">
+        <img [src]="p.img" [alt]="p.name" />
+      </a>
+
+      <div class="info">
+        <a class="name" [routerLink]="['/product', p.id]">{{ p.name }}</a>
+        <p class="sub">{{ p.cat }}</p>
+        <span class="price">₹{{ p.price }}</span>
+        <button class="btn" (click)="add(p); $event.stopPropagation()">Add to Cart</button>
+      </div>
+    </article>
+  </div>
+
+
+  <!-- empty state -->
+  <div class="empty" *ngIf="filtered().length === 0">
+    No products found. Try a different search or category.
+  </div>
+
+  <!-- pager -->
+  <div class="pager" *ngIf="filtered().length > 0">
+    <button class="mini" (click)="setPage(page()-1)" [disabled]="page() === 1">Prev</button>
+    <span class="pg">Page {{ page() }} / {{ totalPages() }}</span>
+    <button class="mini" (click)="setPage(page()+1)" [disabled]="page() === totalPages()">Next</button>
+  </div>
+</section>

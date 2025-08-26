@@ -1,0 +1,57 @@
+<!-- Show full cart when there are items; otherwise show the #empty template -->
+<div class="cart" *ngIf="lines.length > 0; else empty">
+
+  <h2 class="title">Your Cart</h2>
+
+  <div class="list">
+    <div class="item" *ngFor="let l of lines; trackBy: trackById">
+      <img [src]="l.item.img" [alt]="l.item.name" class="img" />
+      <div class="info">
+        <p class="name">{{ l.item.name }}</p>
+        <p class="price">₹{{ l.item.price }}</p>
+      </div>
+
+      <div class="qty">
+        <button class="btn-sm" aria-label="decrease quantity" (click)="dec(l.item.id)">-</button>
+        <input
+          class="num"
+          type="number"
+          [value]="l.qty"
+          min="1"
+          (change)="setQty(l.item.id, $any($event.target).value)"
+        />
+        <button class="btn-sm" aria-label="increase quantity" (click)="inc(l.item.id)">+</button>
+      </div>
+
+      <button class="remove" (click)="remove(l.item.id)">Remove</button>
+    </div>
+  </div>
+
+  <div class="sum">
+    <div class="row">
+      <span class="label">Subtotal</span>
+      <span class="val">₹{{ subtotal }}</span>
+    </div>
+    <div class="row">
+      <span class="label">Delivery</span>
+      <span class="val">₹{{ delivery }}</span>
+    </div>
+    <div class="row total">
+      <span class="label">Total</span>
+      <span class="val">₹{{ subtotal + delivery }}</span>
+    </div>
+
+    <div class="act">
+      <a class="btn continue" routerLink="/shop" routerLinkActive="active">Continue Shopping</a>
+      <a class="btn" routerLink="/checkout" routerLinkActive="active">Checkout</a>
+    </div>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div class="cart empty">
+    <h2 class="title">Your Cart</h2>
+    <p>Your cart is empty.</p>
+    <a class="btn" routerLink="/shop">Shop Now</a>
+  </div>
+</ng-template>

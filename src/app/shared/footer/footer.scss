@@ -1,0 +1,115 @@
+.footer {
+  background: #f8f9fa;          /* Light gray background */
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;              /* Responsive stacking */
+  border-top: 1px solid #e4e4e4;
+  font-family: Arial, sans-serif;
+}
+
+/* Logo section */
+.footer .logo {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.footer .logo img {
+  width: 75px;
+  height: auto;
+  margin-right: 99px;
+}
+
+.footer .name h1 {
+  font-family: "Winter Glows";
+  font-size: 28px;
+  margin-right: 95px;
+  margin-top: 9px;
+  font-weight: bold;
+  color: #10847e;   /* brand green */
+}
+
+/* Column styles */
+.footer > div {
+  flex: 1 1 200px;   /* Each column takes space equally, min 200px */
+  margin: 10px;
+}
+
+.footer h1 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #333;
+  font-weight: bold;
+}
+
+.footer h2 {
+  font-size: 14px;
+  margin: 6px 0;
+  color: #555;
+  font-weight: normal;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.footer h2:hover {
+  color: #10847e;   /* Hover highlight */
+}
+
+/* Newsletter section */
+.footer .newsletter {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .newsletter input {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+.footer .newsletter input:focus {
+  border-color: #10847e;
+}
+
+.footer .newsletter button {
+  padding: 8px 10px;
+  background: #10847e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.footer .newsletter button:hover {
+  background: #0d6b64;
+}
+
+/* Responsive (mobile) */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .footer .logo {
+    justify-content: center;
+  }
+
+  .footer > div {
+    margin: 20px 0;
+  }
+
+  .footer .newsletter {
+    width: 100%;
+    max-width: 300px;
+  }
+}

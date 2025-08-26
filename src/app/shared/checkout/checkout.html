@@ -1,0 +1,179 @@
+<div class="container">
+  <div class="head">
+    <div class="title main">Checkout</div>
+    <div class="sub">Secure • Fast • Easy</div>
+  </div>
+
+  <div class="checkout">
+    <!-- LEFT: DETAILS -->
+    <div class="left">
+      <!-- Contact -->
+      <section class="card">
+        <div class="head">
+          <div class="title">Contact</div>
+          <div class="sub">We’ll send order updates here</div>
+        </div>
+        <div class="row">
+          <div class="field full">
+            <label class="label" for="email">Email</label>
+            <input class="input" id="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label class="label" for="fname">First name</label>
+            <input class="input" id="fname" type="text" placeholder="John" required>
+          </div>
+          <div class="field">
+            <label class="label" for="lname">Last name</label>
+            <input class="input" id="lname" type="text" placeholder="Doe" required>
+          </div>
+          <div class="field full">
+            <label class="label" for="phone">Phone</label>
+            <input class="input" id="phone" type="tel" placeholder="+91 9xxxxxxxxx" required>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shipping -->
+      <section class="card">
+        <div class="head">
+          <div class="title">Shipping address</div>
+          <div class="sub">Domestic delivery</div>
+        </div>
+        <div class="row">
+          <div class="field full">
+            <label class="label" for="address">Address</label>
+            <input class="input" id="address" type="text" placeholder="Street address" required>
+          </div>
+          <div class="field">
+            <label class="label" for="city">City</label>
+            <input class="input" id="city" type="text" placeholder="Chennai" required>
+          </div>
+          <div class="field">
+            <label class="label" for="state">State</label>
+            <input class="input" id="state" type="text" placeholder="TN" required>
+          </div>
+          <div class="field">
+            <label class="label" for="zip">PIN</label>
+            <input class="input" id="zip" type="text" placeholder="6000xx" required>
+          </div>
+          <div class="field full">
+            <label class="label" for="notes">Delivery notes (optional)</label>
+            <textarea class="area" id="notes" placeholder="Landmark, gate code, call before delivery…"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- Delivery -->
+      <section class="card">
+        <div class="head">
+          <div class="title">Delivery</div>
+          <div class="sub">Choose a method</div>
+        </div>
+        <div class="radio-list">
+          <label class="radio-item">
+            <input type="radio" name="ship" [checked]="shipMethod==='standard'" (change)="shipMethod='standard'; updateTotals()">
+            <div>
+              <div>Standard (3–5 days) — Free</div>
+              <div class="sub">Tracked delivery</div>
+            </div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="ship" [checked]="shipMethod==='express'" (change)="shipMethod='express'; updateTotals()">
+            <div>
+              <div>Express (1–2 days) — ₹199</div>
+              <div class="sub">Priority handling</div>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Payment -->
+      <section class="card">
+        <div class="head">
+          <div class="title">Payment</div>
+          <div class="sub">All transactions are secure</div>
+        </div>
+
+        <div class="radio-list">
+          <label class="radio-item">
+            <input type="radio" name="pay" [checked]="payMethod==='card'" (change)="payMethod='card'">
+            <div>Credit / Debit Card</div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="pay" [checked]="payMethod==='upi'" (change)="payMethod='upi'">
+            <div>UPI</div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="pay" [checked]="payMethod==='cod'" (change)="payMethod='cod'">
+            <div>Cash on Delivery</div>
+          </label>
+        </div>
+
+        <!-- Card fields (show only if card) -->
+        <div class="row" *ngIf="payMethod==='card'">
+          <div class="field full">
+            <label class="label" for="cardno">Card number</label>
+            <input class="input" id="cardno" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456">
+          </div>
+          <div class="field">
+            <label class="label" for="exp">Expiry</label>
+            <input class="input" id="exp" type="text" placeholder="MM/YY">
+          </div>
+          <div class="field">
+            <label class="label" for="cvv">CVV</label>
+            <input class="input" id="cvv" type="password" placeholder="***">
+          </div>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-light"  routerLink="/cart" routerLinkActive="active">Back to cart</a>
+          <button class="btn" (click)="placeOrder()">Pay & Place Order</button>
+        </div>
+        <div class="hint">By placing your order, you agree to our Terms & Returns.</div>
+      </section>
+    </div>
+
+    <!-- RIGHT: SUMMARY -->
+    <aside class="right">
+      <section class="card-summary">
+        <div class="head">
+          <div class="title">Order summary</div>
+          <div class="sub">{{ items.length }} item(s)</div>
+        </div>
+
+        <div class="list">
+          <div class="item" *ngFor="let it of items">
+            <div class="thumb">
+              <img [src]="it.img" [alt]="it.name">
+            </div>
+            <div class="meta">
+              <div class="name">{{ it.name }}</div>
+              <div class="note">Qty {{ it.qty }} • {{ it.cat }}</div>
+            </div>
+            <div class="price">₹{{ it.price * it.qty }}</div>
+          </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="coupon">
+          <input class="input" type="text" placeholder="Coupon code" [(ngModel)]="coupon">
+          <button class="btn btn-light" (click)="applyCoupon()">Apply</button>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="row-flex"><span>Subtotal</span><span>₹{{ subtotal }}</span></div>
+        <div class="row-flex"><span>Shipping</span><span>{{ shippingLabel }}</span></div>
+        <div class="row-flex"><span>Tax</span><span>₹{{ tax }}</span></div>
+        <div class="line"></div>
+        <div class="row-flex total"><span>Total</span><span>₹{{ total }}</span></div>
+      </section>
+
+      <section class="card">
+        <div class="title">Need help?</div>
+        <div class="sub">Support: help@yourstore.com</div>
+      </section>
+    </aside>
+  </div>
+</div>

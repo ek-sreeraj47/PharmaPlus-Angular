@@ -1,0 +1,56 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<section class="featured">
+  <div class="container">
+    <h2 class="section-title">Featured Products</h2>
+
+    <ng-container *ngIf="items$ | async as items; else loading">
+      <div class="empty" *ngIf="!items.length">
+        No featured products right now.
+      </div>
+
+      <div class="grid" *ngIf="items.length">
+        <article class="card" *ngFor="let p of items">
+          <figure class="media">
+            <!-- ✅ use bracket notation instead of (p as any) -->
+            <a [routerLink]="['/product', p['_id'] || p.id]">
+              <img
+                [src]="p.img || p['image'] || 'assets/images/placeholder.png'"
+                [alt]="p.name || 'Product image'"
+                loading="lazy"
+              />
+            </a>
+          </figure>
+
+          <h3 class="card-title">{{ p.name }}</h3>
+          <p class="card-text">
+            {{ p.desc || p['description'] || 'High‑quality healthcare product.' }}
+          </p>
+
+          <div class="price">₹{{ p.price }}</div>
+
+          <div class="actions">
+            <a class="card-link" [routerLink]="['/product', p['_id'] || p.id]">View Details</a>
+            <button class="btn" (click)="addToCart(p)">Add to Cart</button>
+            <button class="btn buy" (click)="buyNow(p)">Buy Now</button>
+          </div>
+        </article>
+      </div>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="grid skeleton">
+        <article class="card" *ngFor="let _ of [1,2,3,4]">
+          <div class="media sk"></div>
+          <div class="title sk"></div>
+          <div class="text sk"></div>
+          <div class="price sk"></div>
+          <div class="actions">
+            <div class="btn sk"></div>
+            <div class="btn sk"></div>
+          </div>
+        </article>
+      </div>
+    </ng-template>
+  </div>
+</section>

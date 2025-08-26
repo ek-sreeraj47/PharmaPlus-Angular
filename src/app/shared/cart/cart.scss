@@ -1,0 +1,52 @@
+.cart {
+  max-width: 960px;
+  margin: 24px auto 80px;
+  padding: 16px;
+
+
+  .title { margin: 16px 0 12px; font-size: 24px; font-weight: 700; }
+
+  .list { display: grid; gap: 12px; }
+
+  .item {
+    display: grid;
+    grid-template-columns: 72px 1fr auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    background: #fff;
+
+    .img { width: 72px; height: 72px; object-fit: cover; border-radius: 8px; }
+    .info { display: grid; gap: 4px; }
+    .name { margin: 0; font-weight: 600; }
+    .price { margin: 0; color: #444; }
+
+    .qty {
+      display: inline-flex; align-items: center; gap: 6px;
+      .num { width: 64px; padding: 6px 8px; text-align: center; }
+      .btn-sm {
+        width: 28px; height: 28px; border: 1px solid #ddd; background: #f9f9f9; border-radius: 6px;
+      }
+    }
+
+    .remove {
+      border: 1px solid #ddd; background: #fff; padding: 6px 10px; border-radius: 8px; cursor: pointer;
+    }
+  }
+
+  .sum {
+    margin-top: 16px; padding: 16px; border: 1px solid #e8e8e8; border-radius: 10px; background: #fff;
+    .row { display: flex; justify-content: space-between; margin: 6px 0; }
+    .total { font-weight: 700; font-size: 18px; }
+    .act { display: flex; gap: 10px; margin-top: 12px; }
+    .btn { padding: 10px 14px; border-radius: 10px; background: #111827; color: #fff; text-decoration: none; }
+    .continue { background: darkorange; color: #000; }
+  }
+
+  &.empty {
+    text-align: center;
+    .btn { display: inline-block; margin-top: 12px; padding: 10px 14px; border-radius: 10px; background: #111827; color: #fff; text-decoration: none; }
+  }
+}
