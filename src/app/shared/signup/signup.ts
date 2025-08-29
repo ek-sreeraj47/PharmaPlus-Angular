@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {AuthService} from '../services/auth';
+import {Auth} from '../services/auth';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 
@@ -13,7 +13,7 @@ import {CommonModule} from '@angular/common';
   styleUrl: './signup.scss'
 })
 export class Signup {
-  constructor(private authService: AuthService) {
+  constructor(private authService: Auth) {
   }
   onSubmit(form: any) {
     this.authService.register(form.value).subscribe({
