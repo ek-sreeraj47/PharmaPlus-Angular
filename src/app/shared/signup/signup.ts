@@ -16,7 +16,7 @@ export class Signup {
   constructor(private authService: AuthService) {
   }
   onSubmit(form: any) {
-    this.authService.signup(form.value).subscribe({
+    this.authService.register(form.value).subscribe({
       next: () => alert('Signup successful! Please login.'),
       error: err => alert(err.error?.error || 'Signup failed')
     });
