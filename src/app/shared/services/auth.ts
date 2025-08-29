@@ -2,32 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
+type LoginBody = { email?: string; username?: string; password: string };
+type RegisterBody = { name: string; email: string; username?: string; password: string };
+type AuthResponse = { token: string; user: any };
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private api = 'http://localhost:5000/api/auth';
-  token: string | null = localStorage.getItem('token');
+  // Use relative base so the interceptor adds API_BASE_URL for you
+  private readonly base = '/api/auth';
 
   constructor(private http: HttpClient) {}
 
-  signup(data: any) {
-    return this.http.post(`${this.api}/signup`, data);
+  /** prefer /register to avoid browser blockers on /signup */
+  register(body: RegisterBody) {
+    return this.http.post<AuthResponse>(`${this.base}/register`, body).pipe(
+      tap(res => this.storeToken(res?.token))
+    );
   }
 
-  login(data: any) {
-    return this.http.post<{ token: string; user: any }>(`${this.api}/login`, data).pipe(
-      tap(res => {
-        this.token = res.token;
-        localStorage.setItem('token', res.token);
-      })
+  /** still works with either email or username + password */
+  login(body: LoginBody) {
+    return this.http.post<AuthResponse>(`${this.base}/login`, body).pipe(
+      tap(res => this.storeToken(res?.token))
     );
   }
 
   logout() {
-    this.token = null;
     localStorage.removeItem('token');
   }
 
-  isLoggedIn() {
-    return !!this.token;
+  isLoggedIn(): boolean {
+    // read fresh each time (don’t rely on a cached property)
+    return !!localStorage.getItem('token');
+  }
+
+  private storeToken(token?: string) {
+    if (token) localStorage.setItem('token', token);
   }
 }
