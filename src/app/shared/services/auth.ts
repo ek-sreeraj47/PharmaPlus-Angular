@@ -7,7 +7,7 @@ type RegisterBody = { name: string; email: string; username?: string; password: 
 type AuthResponse = { token: string; user: any };
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class Auth {
   // Use relative base so the interceptor adds API_BASE_URL for you
   private readonly base = '/api/auth';
 
