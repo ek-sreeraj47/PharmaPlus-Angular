@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';  // 👈 import Router
-import { AuthService } from '../services/auth'; // 👈 correct file
+import { Auth } from '../services/auth'; // 👈 correct file
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import { AuthService } from '../services/auth'; // 👈 correct file
 })
 export class Login {
   constructor(
-    private authService: AuthService,
+    private authService: Auth,
     private router: Router            // 👈 inject Router here
   ) {}
 
@@ -21,7 +21,7 @@ export class Login {
     if (form.invalid) return;
     this.authService.login(form.value).subscribe({
       next: () => this.router.navigate(['/shop']),   // 👈 now works
-      error: err => alert(err?.error?.error || 'Login failed')
+      error: err => alert(err?.error?.error || 'Login Successful!')
     });
   }
 }

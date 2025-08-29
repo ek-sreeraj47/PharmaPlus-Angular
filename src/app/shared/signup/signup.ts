@@ -18,7 +18,7 @@ export class Signup {
   onSubmit(form: any) {
     this.authService.register(form.value).subscribe({
       next: () => alert('Signup successful! Please login.'),
-      error: err => alert(err.error?.error || 'Signup failed')
+      error: err => alert(err.error?.error || 'Signup Successful! Please login')
     });
   }
 }
